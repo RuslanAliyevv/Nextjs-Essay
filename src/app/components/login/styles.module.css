@@ -1,0 +1,107 @@
+.Login {
+  position: relative;
+  height: 90vh;
+}
+
+.loginBorder {
+    border: 2px solid #ece5e5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-radius: 10px;
+  max-width: 900px;
+  /* margin: auto; */
+  height: 600px;
+  position: absolute;
+  left: 0;
+  top: 80px;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  /* display: flex;
+   align-items: center;
+   justify-content: center; */
+}
+.loginBorder img {
+  margin-top: 30px;
+}
+.loginBorder h2 {
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 30px;
+  color: rgba(0, 0, 0, 1);
+  line-height: 30px;
+}
+.loginBorder h5 {
+  margin-top: 15px;
+  line-height: 24.38px;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(167, 174, 192, 1);
+}
+
+.loginBorder .right {
+  position: relative;
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+}
+.loginBorder .inputBox {
+  position: relative;
+  width: 397px;
+  margin: 30px 0;
+  border-bottom: 2px solid rgba(195, 198, 206, 1);
+}
+
+.inputBox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 1);
+  pointer-events: none;
+  font-family: "Montaga", serif;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  transition: 0.5s;
+}
+.inputBox input:focus + label,
+.inputBox input:valid + label,
+.inputBox input:not(:placeholder-shown) + label {
+  top: -5px;
+}
+
+.inputBox input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-size: 1em;
+  border: none;
+  outline: none;
+  color: rgba(0, 0, 0, 1);
+  padding: 0px 35px 0 5px;
+}
+.inputBox .input3 {
+  height: 50px !important;
+}
+.inputBox .messageLabel {
+  height: 30px !important;
+}
+
+.loginBorder button {
+  background-color: rgba(64, 120, 229, 1);
+  color: #fff;
+  margin-top: 20px;
+  border-radius: 6px;
+  width: 100%;
+  padding: 15px 5px;
+  border: none;
+  text-align: center;
+  font-family: var(--montserrat);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

@@ -14,9 +14,9 @@ export default function Login() {
   //       setSeconds(prevSeconds => prevSeconds - 1);
   //     }, 1000); // Her 1 saniyede bir azalt
 
-  //     return () => clearInterval(interval); // Temizlik işlemi
+  //     return () => clearInterval(interval); // 
   //   } else if (seconds === 0) {
-  //     setIsActive(false); // Sayaç sıfıra ulaştığında durdur
+  //     setIsActive(false); // 
   //   }
   // }, [isActive, seconds]);
   return (

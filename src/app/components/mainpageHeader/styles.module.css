@@ -1,0 +1,39 @@
+.MainHeader {
+  padding: 1rem 0;
+}
+.MainHeader .left span {
+  margin-left: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  font-size: 18px;
+  line-height: 27px;
+  font-family: "Poppins", sans-serif;
+}
+.MainHeader .rowAll {
+  justify-content: flex-end !important;
+}
+.MainHeader .right button {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+  background-color: rgba(58, 143, 175, 1);
+  padding: 15px 10px;
+  width: 27%;
+  color: #fff;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  margin-left: 20px;
+  font-family: "Poppins", sans-serif;
+
+}
+.MainHeader .right span{
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    font-size: 18px;
+  font-family: "Poppins", sans-serif;
+
+    line-height: 27px;
+}
+.MainHeader .right{
+    text-align: end;
+}

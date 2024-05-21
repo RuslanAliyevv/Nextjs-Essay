@@ -3,7 +3,27 @@ import React from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import  { useState, useEffect } from 'react';
+import { login } from '../services/api/user';
+import { useRouter } from "next/navigation";
 export default function Login() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const credentials = { email, password };
+      const response = await login(credentials);
+      console.log('Login successful', response);
+      setErrorMessage('');
+      router.push('/'); 
+    } catch (error) {
+      console.error('Login failed', error);
+      setErrorMessage('Mission Failed');
+    }
+  };
+
 
   // const [seconds, setSeconds] = useState(30);
   // const [isActive, setIsActive] = useState(true);
@@ -36,7 +56,7 @@ export default function Login() {
           <h5>İmla.az platformasına giriş.</h5>
         </div>
         <div className={`text-center ${styles.right}`}>
-          <form action="">
+          <form onSubmit={handleSubmit} action="">
             <div className={styles.inputBox}>
               <input
                 name="email"
@@ -44,9 +64,11 @@ export default function Login() {
                 className={styles.input}
                 placeholder=""
                 type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <label htmlFor="my">Your Name</label>
+              <label htmlFor="my">E-mail</label>
             </div>
             <div className={styles.inputBox}>
               <input
@@ -54,13 +76,19 @@ export default function Login() {
                 id="my1"
                 className={styles.input}
                 placeholder=""
-                type="email"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <label htmlFor="my1">E-mail</label>
+              <label htmlFor="my1">Şifrə</label>
             </div>
 
-            <button className={styles.buttonHover}>Daxil ol</button>
+            <button type="submit" className={styles.buttonHover}>Daxil ol</button>
+            <div style={{height:"0px",marginTop:"10px"}}>
+          {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
+            </div>
           </form>
         </div>
         <div className="text-center mt-5">

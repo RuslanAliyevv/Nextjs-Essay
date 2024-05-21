@@ -1,9 +1,13 @@
 import React from 'react'
-import Login from "../components/login/login"
+// import Login from "../components/login/loginpage"
+import MainPageHeader from "../components/mainpageHeader/header"
+import Info from "../components/section2/info"
 export default function Main() {
   return (
     <>
-    <Login />
+    <MainPageHeader />
+    <Info />
+    {/* <Login /> */}
     </>
   )
 }

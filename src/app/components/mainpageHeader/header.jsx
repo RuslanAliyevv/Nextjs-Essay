@@ -45,7 +45,7 @@ export default function MainPageHeader() {
           </div>
           <div className="col-lg-5">
             <div className={styles.right}>
-                <Link href="to">
+                <Link href="/testpage">
                 <span>Sınaq</span>
                 </Link>
                 {/* {isLoggedIn ? (

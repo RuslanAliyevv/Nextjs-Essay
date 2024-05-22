@@ -1,10 +1,9 @@
 import axios from "../axiosInstance";
 import { setCookie, getCookie } from "cookies-next";
 
-const API_URL = 'https://your-api-url.com'
 
 export const login = async (credentials) => {
-  const response = await axios.post(`${API_URL}/auth/login`, credentials);
+  const response = await axios.post(`/api/auth/login`, credentials);
   const { accessToken, refreshToken } = response.data;
 
   // Access ve Refresh Token'ları cookie'lere kaydet
@@ -22,8 +21,8 @@ export const refreshAccessToken = async (ctx = null) => {
     req: ctx?.req,
     res: ctx?.res,
   });
-  const response = await axios.post(`${API_URL}/auth/refresh-token`, {
-    refreshToken,
+  const response = await axios.post(`/api/auth/refresh`, {
+    refresh: refreshToken,
   });
 
   const { accessToken } = response.data;

@@ -1,0 +1,35 @@
+.Statistic{
+    padding: 3rem 0;
+}
+.Statistic span{
+    color: rgba(31, 31, 31, 1);
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    font-size: 50px;
+    line-height: 60.95px;
+}
+.Statistic span:nth-last-child(2){
+    margin-left: 20px;
+}
+.Statistic h5{
+    color: rgba(31, 31, 31, 1);
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    line-height: 26px;
+    text-transform: uppercase;
+}
+.Statistic h2{
+    color: rgba(31, 31, 31, 1);
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
+    line-height: 36.57px;
+}
+.Statistic p{
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    line-height: 26px;
+}

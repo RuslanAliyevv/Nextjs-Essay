@@ -1,0 +1,43 @@
+.InfoVideo {
+  padding: 3rem 0;
+}
+.InfoVideo h2 {
+    width: 80%;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36.57px;
+  font-family: "Montserrat", sans-serif;
+}
+.InfoVideo .rightDown h2{
+    width: 60% !important;
+}
+.InfoVideo span {
+  color: rgba(250, 200, 71, 1);
+}
+.InfoVideo p {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24.38px;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(0, 0, 0, 1);
+}
+
+.InfoVideo button {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+  background-color: rgba(58, 143, 175, 1);
+  padding: 15px 10px;
+  width: 40%;
+  color: #fff;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  font-family: "Poppins", sans-serif;
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+   .InfoVideo img{
+        width: 550px;
+    }
+}

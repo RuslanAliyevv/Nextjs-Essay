@@ -1,0 +1,58 @@
+.EssayPage {
+    position: relative;
+    height: 90vh;
+    padding: 1rem 0;
+  }
+  
+  .essayCenter {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    height: 600px;
+    /* position: absolute;
+    left: 0;
+    top: 200px;
+    right: 0;
+    bottom: 0;
+    margin: auto; */
+    display: flex;
+     align-items: center;
+     justify-content: center;
+  }
+
+  .essayCenter h2 {
+    margin-top: 30px;
+    font-weight: 700;
+    font-size: 30px;
+    color: rgba(31, 31, 31, 1);
+    line-height: 30px;
+    font-family: "Montserrat", sans-serif;
+  }
+  .essayCenter h5 {
+    margin-top: 15px;
+    line-height: 24.38px;
+    font-size: 20px;
+    font-weight: 500;
+    color:  rgba(0, 0, 0, 1);
+    font-family: "Montserrat", sans-serif;
+  }
+  .essayCenter button {
+    background-color: rgba(58, 143, 175, 1);
+    color: #fff;
+    border-radius: 60px;
+    width: 65%;
+    padding: 15px 5px;
+    border: none;
+    text-align: center;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  .buttonEdit{
+    margin-top: 60px;
+  }
+  .EssayPage .right{
+    text-align: end;
+  }

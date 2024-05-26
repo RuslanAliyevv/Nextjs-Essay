@@ -1,0 +1,68 @@
+.Ambassador{
+    padding: 3rem 0;
+    background-color: rgba(229, 240, 245, 1);
+}
+.Ambassador img{
+    border-radius: 90px;
+}
+.Ambassador .itemDiv{
+    position: relative;
+    
+}
+.Ambassador .flag{
+    position: absolute;
+    top: 65%;
+    left: 53px;
+    transform: translate(-50%, -50%);
+}
+.Ambassador .personImg{
+    text-align: center;
+}
+.Ambassador h5{
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    /* width: 180px; */
+}
+.Ambassador .h5Edit{
+    /* margin-left: -20px; */
+    text-align: center;
+    width: 150px;
+}
+.Ambassador .itemDiv p{
+    margin-top: -10px;
+    text-align: center;
+    /* margin-left: 15px; */
+    color: rgba(77, 77,77, 1);
+    font-weight: 300;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    line-height: 26px;
+}
+.Ambassador .leftBox h5{
+    color: rgba(31, 31,31, 1);
+    font-weight: 300;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    line-height: 21.94px;
+}
+.Ambassador .leftBox h2{
+    width: 80%;
+    color: rgba(31, 31,31, 1);
+    font-weight: 600;
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+}
+.Ambassador .leftBox p{
+    width: 80%;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+    

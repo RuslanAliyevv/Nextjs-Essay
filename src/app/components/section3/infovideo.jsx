@@ -59,7 +59,9 @@ export default function InfoVideo() {
                   edin və uğurla yazmaq üçün tam hazırlıqlı olduğunuzdan əmin
                   olun.
                 </p>
-                <button>Sınaq</button>
+               <Link href="/testpage">
+               <button>Sınaq</button>
+               </Link>
               </div>
             </div>
           </div>

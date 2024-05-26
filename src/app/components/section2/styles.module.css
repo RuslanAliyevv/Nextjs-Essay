@@ -1,34 +1,54 @@
-.Info{
-    padding: 3rem 0;
+.Info {
+  padding: 3rem 0;
 }
-.Info .left{
-    margin-top: 50px;
+.Info .left {
+  margin-top: 20px;
 }
-.Info h1{
-    font-weight: 700;
-    font-size: 50px;
-    font-family: "Montserrat", sans-serif;
-    color: rgba(31, 31, 31, 1);
-    line-height: 73.14px;
+.Info .rowAll {
+  margin-top: 70px;
+}
+.Info h1 {
+  font-weight: 700;
+  font-size: 50px;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(31, 31, 31, 1);
+  line-height: 73.14px;
+}
+.Info h5 {
+  font-weight: 400;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(0, 0, 0, 1);
+  line-height: 24.38px;
+}
+.Info button {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+  background-color: rgba(58, 143, 175, 1);
+  padding: 15px 10px;
+  width: 40%;
+  color: #fff;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  font-family: "Poppins", sans-serif;
+  margin-top: 20px;
+}
+.error {
+  color: rgb(227, 34, 34);
+  height: 100px !important;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-left: 5px;
+  font-family: "Poppins", sans-serif;
+}
 
+.audio {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.Info h5{
-    font-weight: 400;
-    font-size: 20px;
-    font-family: "Montserrat", sans-serif;
-    color: rgba(0, 0, 0, 1);
-    line-height: 24.38px;
-}
-.Info button{
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 20px;
-    background-color: rgba(58, 143, 175, 1);
-    padding: 15px 10px;
-    width: 40%;
-    color: #fff;
-    border-radius: 50px;
-    border: 1px solid transparent;
-    font-family: "Poppins", sans-serif;
-    margin-top: 20px;
+.right {
+  position: relative;
 }

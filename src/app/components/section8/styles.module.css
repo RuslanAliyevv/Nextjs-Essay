@@ -1,0 +1,96 @@
+.Ranking {
+  padding: 3rem 0;
+}
+.Ranking .liderBorder {
+  padding: 1px 10px;
+  height: 25px;
+  background-color: rgba(58, 143, 175, 1);
+  width: 8%;
+  border: 1px solid rgba(58, 143, 175, 1);
+  border-radius: 6px 28px 0px 0px;
+}
+.Ranking .liderBorder h5 {
+  color: rgba(255, 255, 255, 1);
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 21.94px;
+}
+.Ranking .rankingBorder {
+  border: 1px solid rgba(245, 246, 250, 1);
+  background-color: rgba(245, 246, 250, 1);
+  border-radius: 6px;
+  padding: 18px 0 18px 0;
+}
+.Ranking .left{
+    padding-left: 20px;
+}
+.Ranking .left h3 {
+  display: inline-block !important;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 21.94px;
+}
+.Ranking .leftRowDiv {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+.Ranking .leftSpanBorder {
+  padding: 5px 13px;
+  background-color: rgba(58, 143, 175, 1);
+  border: 1px solid rgba(58, 143, 175, 1);
+  border-radius: 6px;
+}
+.Ranking .leftSpanBorder span{
+    color:  rgba(255, 255, 255, 1);
+}
+.Ranking .right{
+    /* text-align: end; */
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+}
+.Ranking .right span{
+    color: rgba(0, 0, 0, 1);
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    line-height: 21.94px;
+    margin-left: 10px;
+}
+.Ranking .right span:nth-last-child(1){
+    /* margin-left: 60px !important; */
+    margin-left: 30px;
+}
+
+
+.Ranking .otherh5Edit{
+    margin-top: 50px;
+    color: rgba(31, 31, 31, 1);
+    font-weight: 600;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    line-height: 21.94px;
+}
+.downRankingBorder .rankingBorder{
+    margin-top: 10px;
+}
+
+
+.sss{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Ranking .spanNumber{
+  display: inline-block;
+  width: 130px;
+}
+.Ranking .spanlang{
+  display: inline-block;
+  width: 230px;
+}

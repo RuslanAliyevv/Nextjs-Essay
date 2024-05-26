@@ -1,9 +1,23 @@
+"use client"
 import React from "react";
 import styles from "./styles.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import  { useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 
 export default function TestExam() {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+    const contentState = editorState.getCurrentContent();
+    const plainText = contentState.getPlainText(); // İçeriği düz metin olarak al
+    // console.log(plainText);
+  };
   return (
     <div className={styles.TextExam}>
       <div className="container">
@@ -17,9 +31,22 @@ export default function TestExam() {
         </h5>
         {/* <iframe src="" frameborder="0">aaa</iframe> */}
         <form className={styles.form}>
-          <div className={styles.textDiv}>
+          {/* <div className={styles.textDiv}>
             <textarea className={styles.textarea} id="message" name="message" rows="4" cols="50"></textarea>
+          </div> */}
+          <div className={styles.textDiv}>
+            <Editor
+              editorState={editorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={onEditorStateChange}
+              placeholder="Metni yazin"
+            />
           </div>
+          {/* <button type="button" onClick={getEditorContent}>
+           Testiqle
+          </button> */}
         </form>
       </div>
     </div>

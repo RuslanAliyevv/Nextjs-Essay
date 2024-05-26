@@ -59,9 +59,10 @@ export default function TestPage() {
                 label="Age"
                 onChange={handleChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={10}>Azərbaycan</MenuItem>
+                <MenuItem value={20}>Türk</MenuItem>
+                <MenuItem value={30}>İngilis</MenuItem>
+                <MenuItem value={30}>Rus</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -75,14 +76,16 @@ export default function TestPage() {
                 label="Gender"
                 onChange={handleGenderChange}
               >
-                <MenuItem value={"male"}>Male</MenuItem>
-                <MenuItem value={"female"}>Female</MenuItem>
-                <MenuItem value={"other"}>Other</MenuItem>
+                  <MenuItem value={"male"}>Asan</MenuItem>
+                <MenuItem value={"female"}>Orta</MenuItem>
+                <MenuItem value={"other"}>Çətin</MenuItem>
               </Select>
             </FormControl>
           </Box>
          <div className={styles.buttonEdit}>
-         <button>Davam et</button>
+        <Link href="/testexam">
+        <button>Davam et</button>
+        </Link>
          </div>
         </div>
       </div>

@@ -1,5 +1,9 @@
 .MainHeader {
+  position: fixed;
   padding: 1rem 0;
+  z-index: 999;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 1);
 }
 .MainHeader .left span {
   margin-left: 20px;
@@ -8,6 +12,7 @@
   font-size: 18px;
   line-height: 27px;
   font-family: "Poppins", sans-serif;
+  cursor: pointer;
 }
 .MainHeader .rowAll {
   justify-content: flex-end !important;
@@ -31,6 +36,7 @@
     color: rgba(0, 0, 0, 1);
     font-size: 18px;
   font-family: "Poppins", sans-serif;
+  cursor: pointer;
 
     line-height: 27px;
 }

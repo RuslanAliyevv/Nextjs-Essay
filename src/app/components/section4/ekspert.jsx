@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Ekspert() {
   return (
     <>
-      <div className={styles.Ekspert}>
+      <div id="Ekspert" className={styles.Ekspert}>
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6">

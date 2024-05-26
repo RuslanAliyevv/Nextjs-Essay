@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Statistic() {
   return (
     <>
-      <div className={styles.Statistic}>
+      <div id="Statistic" className={styles.Statistic}>
         <div className="container">
           <div className="row">
             <div className="col-lg-6">

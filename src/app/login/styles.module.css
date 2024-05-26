@@ -21,7 +21,7 @@
    justify-content: center; */
 }
 .loginBorder img {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .loginBorder h2 {
   margin-top: 30px;
@@ -90,10 +90,10 @@
 }
 
 .loginBorder button {
-  background-color: rgba(64, 120, 229, 1);
+  background-color: rgba(58, 143, 175, 1);
   color: #fff;
   margin-top: 20px;
-  border-radius: 6px;
+  border-radius: 30px;
   width: 100%;
   padding: 15px 5px;
   border: none;
@@ -104,3 +104,11 @@
   font-weight: 500;
   line-height: normal;
 }
+.error{
+  color: rgb(227, 34, 34);
+  height: 100px !important;
+  font-weight: 700;
+  margin-top: 10px;
+  font-family: "Montserrat", sans-serif;
+}
+

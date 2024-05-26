@@ -1,0 +1,27 @@
+.Partner{
+    padding: 3rem 0;
+}
+
+.Partner .rowAll{
+    margin-top: 60px;
+    justify-content: center;
+    align-items: center;
+    gap: 90px;
+}
+.Partner h2{
+    color: rgba(31, 31, 31, 1);
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
+    line-height: 36.57px;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .Partner .rowAll{
+        gap: 70px;
+    }
+    .Partner img{
+        width: 120px !important;
+        height: 27px !important;
+    }
+ }

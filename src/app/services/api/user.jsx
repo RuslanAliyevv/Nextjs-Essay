@@ -2,6 +2,17 @@ import axios from "../axiosInstance";
 import { setCookie, getCookie } from "cookies-next";
 
 
+
+export const refreshAccessToken = async () => {
+  try {
+    const response = await axios.post("/api/auth/refresh-token", {
+    });
+    return response.data.accessToken;
+  } catch (error) {
+    throw new Error("Access token yenilenmedi.");
+  }
+};
+
 export const login = async (credentials) => {
   try {
     const response = await axios.post(`/api/auth/login`, credentials);

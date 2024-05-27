@@ -1,13 +1,17 @@
-"use client"
+"use client";
 import React from "react";
 import styles from "./styles.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import  { useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { EditorState, convertToRaw } from "draft-js";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
+
+const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 export default function TestExam() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -15,16 +19,16 @@ export default function TestExam() {
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
     const contentState = editorState.getCurrentContent();
-    const plainText = contentState.getPlainText(); // İçeriği düz metin olarak al
+    const plainText = contentState.getPlainText(); 
     // console.log(plainText);
   };
   return (
     <div className={styles.TextExam}>
       <div className="container">
         <div className="text-end">
-         <Link href="/">
-         <button>Ana Səhifə</button>
-         </Link>
+          <Link href="/">
+            <button>Ana Səhifə</button>
+          </Link>
         </div>
         <h5 className="text-center">
           İmlaya başlamaq üçün aşağıdakı səs faylını başladın.

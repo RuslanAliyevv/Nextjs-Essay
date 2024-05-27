@@ -1,7 +1,7 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+
 
 const AudioPlayer = () => {
   const [audioSrc, setAudioSrc] = useState('');

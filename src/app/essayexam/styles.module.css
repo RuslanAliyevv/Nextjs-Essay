@@ -110,7 +110,7 @@
   border-radius: 50px;
   border: 1px solid transparent;
   font-family: "Josefin Sans", sans-serif;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 
@@ -136,6 +136,9 @@
 .editorClassName {
   min-height: 200px;
   padding: 10px;
+}
+.redText{
+  color: red !important;
 }
 
 

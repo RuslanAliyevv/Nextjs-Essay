@@ -3,12 +3,55 @@ import React from "react";
 import styles from "./styles.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import  { useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
+import  { useState,useEffect,useRef } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { EditorState, convertToRaw } from "draft-js";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
 export default function EssayExam() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [timer, setTimer] = useState(30);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const audioRef = useRef(null);
+  const buttonRef = useRef(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleAudioEnd = () => {
+      let countdown = 30;
+      setTimer(countdown);
+      setIsTimerRunning(true);
+      const interval = setInterval(() => {
+        countdown -= 1;
+        setTimer(countdown);
+        if (countdown <= 0) {
+          clearInterval(interval);
+          buttonRef.current.click();
+        }
+      }, 1000);
+    };
+
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      audioElement.addEventListener("ended", handleAudioEnd);
+    }
+
+    return () => {
+      if (audioElement) {
+        audioElement.removeEventListener("ended", handleAudioEnd);
+      }
+    };
+  }, [isTimerRunning]);
+       
+
+  const handleSubmit = () => {
+    router.push('/essayresult');
+  };
+
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
@@ -36,7 +79,10 @@ export default function EssayExam() {
             </div>
           </div>
           <h5>İmlaya başlamaq üçün aşağıdakı səs faylını başladın.</h5>
-          
+          <audio  style={{marginTop:"10px"}} controls ref={audioRef}>
+            <source src="/assets/image/the-wind-goodbye-2023-183300.mp3" type="audio/mpeg" />
+            Tarayıcı audio elementini desteklemir.
+          </audio>
           <div className={`row align-items-center ${styles.textarearow}`}>
             <div className="col-lg-9">
               <div className={styles.taimerLeft}>
@@ -67,14 +113,14 @@ export default function EssayExam() {
                   <div className={styles.taimerItems}>
                     <h2 className="text-center">Taymer</h2>
                     <div className={styles.hr}></div>
-                    <span>30</span>
+                    <span className={isTimerRunning  ? styles.redText : ''}>{timer}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="text-center">
-            <button className={styles.endButton}>Təsdiqlə</button>
+            <button ref={buttonRef} onClick={handleSubmit} className={styles.endButton}>Təsdiqlə</button>
           </div>
         </div>
       </div>

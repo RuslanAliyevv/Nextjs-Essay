@@ -37,7 +37,7 @@ export default function Info() {
                   yazılışını mənimsəmək yalnız ünsiyyətinizi yaxşılaşdırmır, həm
                   də dili effektiv istifadə etməkdə inamınızı artırır.
                 </h5>
-                <button onClick={handleStartClick}>Başla</button>
+                <button className={styles.buttonHover} onClick={handleStartClick}>Başla</button>
                 {errorMessage && <p className={styles.error}>{errorMessage}</p>}
               </div>
             </div>

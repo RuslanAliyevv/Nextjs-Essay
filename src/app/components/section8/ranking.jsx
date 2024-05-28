@@ -39,7 +39,7 @@ export default function Ranking() {
                     <span>Azərbaycan Dili</span>
                     </div>
                    <div className={styles.spanNumber}>
-                   <span>3627</span>
+                   <span>6431</span>
                    </div>
                   </div>
                 </div>
@@ -76,7 +76,7 @@ export default function Ranking() {
                     <span>Azərbaycan Dili</span>
                     </div>
                    <div className={styles.spanNumber}>
-                   <span>3627</span>
+                   <span>5324</span>
                    </div>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ export default function Ranking() {
                     <span>Alman Dili</span>
                     </div>
                    <div className={styles.spanNumber}>
-                   <span>3627</span>
+                   <span>4453</span>
                    </div>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ export default function Ranking() {
                     <span>Alman Dili</span>
                     </div>
                    <div className={styles.spanNumber}>
-                   <span>3627</span>
+                   <span>2527</span>
                    </div>
                   </div>
                 </div>

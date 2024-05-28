@@ -20,8 +20,8 @@ export default function EssayExam() {
   const audioRef = useRef(null);
   const buttonRef = useRef(null);
   const router = useRouter();
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
 
   useEffect(() => {
     const handleAudioEnd = () => {
@@ -38,14 +38,24 @@ export default function EssayExam() {
       }, 1000);
     };
 
+    const preventPause = (event) => {
+      const audioElement = audioRef.current;
+      if (audioElement && !audioElement.ended) {
+        event.preventDefault();
+        audioElement.play();
+      }
+    };
+
     const audioElement = audioRef.current;
     if (audioElement) {
       audioElement.addEventListener("ended", handleAudioEnd);
+      audioElement.addEventListener("pause", preventPause);
     }
 
     return () => {
       if (audioElement) {
         audioElement.removeEventListener("ended", handleAudioEnd);
+        audioElement.removeEventListener("pause", preventPause);
       }
     };
   }, [isTimerRunning]);

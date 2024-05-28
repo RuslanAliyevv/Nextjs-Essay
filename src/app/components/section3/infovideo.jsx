@@ -60,7 +60,7 @@ export default function InfoVideo() {
                   olun.
                 </p>
                <Link href="/testpage">
-               <button>Sınaq</button>
+               <button className={styles.buttonHover}>Sınaq</button>
                </Link>
               </div>
             </div>

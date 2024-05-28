@@ -83,7 +83,7 @@ export default function EssayPage() {
             </FormControl>
           </Box>
          <div className={styles.buttonEdit}>
-         <button>Davam et</button>
+         <button className={styles.buttonHover}>Davam et</button>
          </div>
         </div>
       </div>

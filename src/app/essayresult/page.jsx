@@ -37,7 +37,7 @@ export default function Result() {
                     </div>
                     <div className='text-center'>
                       <Link href="/">
-                      <button >Ana səhifəyə keçid</button>
+                      <button className={styles.buttonHover}>Ana səhifəyə keçid</button>
                       </Link>
                     </div>
                     

@@ -84,7 +84,7 @@ export default function TestPage() {
           </Box>
          <div className={styles.buttonEdit}>
         <Link href="/testexam">
-        <button>Davam et</button>
+        <button className={styles.buttonHover}>Davam et</button>
         </Link>
          </div>
         </div>

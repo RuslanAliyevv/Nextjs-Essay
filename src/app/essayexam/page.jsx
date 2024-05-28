@@ -20,6 +20,7 @@ export default function EssayExam() {
   const audioRef = useRef(null);
   const buttonRef = useRef(null);
   const router = useRouter();
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -48,12 +49,14 @@ export default function EssayExam() {
       }
     };
   }, [isTimerRunning]);
+
+  
        
 
   const handleSubmit = () => {
-    setIsLoading(true); // Yükleniyor durumunu true yapın
+    setIsLoading(true); 
     setTimeout(() => {
-      setIsLoading(false); // 2 saniye sonra yükleniyor durumunu false yapın
+      setIsLoading(false); 
       router.push('/essayresult');
     }, 2000);
   };
@@ -66,7 +69,7 @@ export default function EssayExam() {
   };
   return (
     <>
-       {isLoading && <Loading />} {/* Yükleniyor animasyonunu gösterin */}
+       {isLoading && <Loading />} 
       <div className={styles.EssayExam}>
         <div className="container">
           <div className="text-end">

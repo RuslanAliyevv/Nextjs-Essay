@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.HETZNER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "."
-          target: "/home/frontend"
+          target: "/home/imlay-frontend"
       - name: SSH into Hetzner and restart app
         uses: appleboy/ssh-action@master
         with:

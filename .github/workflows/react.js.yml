@@ -39,6 +39,6 @@ jobs:
           username: ${{ secrets.HETZNER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/frontend
+            cd /home/imlay-frontend
             docker build -t nextjs-app .
             docker run -p 3000:3000 nextjs-app

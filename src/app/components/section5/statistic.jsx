@@ -9,10 +9,12 @@ export default function Statistic() {
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              <div className="left">
+              <div className={styles.left}>
                 <div className="row">
                   <div className="col-lg-6">
-                    <div className="leftDown">
+                    <div className={styles.leftDown}>
+                      <div className={styles.hr1}></div>
+                      <div className={styles.hr2}></div>
                       <span>9210</span>
                       <span>+</span>
                       <h5>Məmnun müştəri</h5>

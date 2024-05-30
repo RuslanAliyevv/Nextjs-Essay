@@ -1,9 +1,9 @@
 import "./globals.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import { LanguageProvider } from "./components/Context/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={inter.className}>{children}</body>
+      <body suppressHydrationWarning={true} className={inter.className}>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

@@ -65,17 +65,17 @@
   .buttonHover:before {
     content: "";
     background: linear-gradient(
-      45deg,
-      #32CD32,
-      #00FF00,
-      #228B22,
-      #008000,
-      #ADFF2F,
-      #228B22,
-      #FFFF00,
-      #00FF00,
-      #9ACD32
-    );
+    45deg,
+    #FFA500,
+    #FFA500,
+    #FFA500,
+    #FFD700,
+    #FFA500,
+    #FF8C00,
+    #FFFF00,
+    #FFA500,
+    #FFD700
+  );
     position: absolute;
     top: -2px;
     left: -2px;
@@ -120,4 +120,15 @@
     100% {
       background-position: 0 0;
     }
+  }
+  .error{
+    color: rgb(204, 41, 41);
+    margin-top: 10px;
+  }
+  .right h5{
+    font-weight: 700;
+    font-size: 18px;
+    /* color: rgba(31, 31, 31, 1); */
+    line-height: 30px;
+    font-family: "Montserrat", sans-serif;
   }

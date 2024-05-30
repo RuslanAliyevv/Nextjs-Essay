@@ -2,7 +2,10 @@
 import React from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,13 +13,65 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Link from "next/link";
 export default function TestPage() {
-  const [age, setAge] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  // const [age, setAge] = React.useState("");
+  // const [gender, setGender] = React.useState("");
+  // const handleChange = (event) => {
+  //   setAge(event.target.value);
+  // };
+  // const handleGenderChange = (event) => {
+  //   setGender(event.target.value);
+  // };
+  const [languages, setLanguages] = useState([]);
+  // const [levels, setLevels] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const languageResponse = await axios.get("/api/languages");
+        console.log(languageResponse.data);
+        setLanguages(languageResponse.data);
+      } catch (error) {
+        console.error("Data cekme xeta:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleLanguageChange = (event) => {
+    setSelectedLanguage(event.target.value);
   };
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
+
+  const handleLevelChange = (event) => {
+    setSelectedLevel(event.target.value);
+  };
+
+  const handleStartClick = async () => {
+    if (!selectedLanguage) {
+      setErrorMessage("Zəhmət olmasa dil seçin!");
+      return;
+    }
+
+    try {
+      const response = await axios.get("/api/languages", {
+        params: {
+          language: selectedLanguage,
+        },
+      });
+
+      if (response.status === 200) {
+        router.push("/testexam");
+      } else {
+        setErrorMessage("Bir hata oluştu");
+      }
+    } catch (error) {
+      console.error("Başlama hatası:", error);
+      setErrorMessage("Bir hata oluştu!");
+    }
   };
   return (
    <>
@@ -55,18 +110,24 @@ export default function TestPage() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
+                value={selectedLanguage}
+                  onChange={handleLanguageChange}
                 label="Age"
-                onChange={handleChange}
               >
-                <MenuItem value={10}>Azərbaycan</MenuItem>
+                
+                  {languages.map((language) => (
+                    <MenuItem key={language.id} value={language.language_name}>
+                      {language.language_name}
+                    </MenuItem>
+                  ))}
+                {/* <MenuItem value={10}>Azərbaycan</MenuItem>
                 <MenuItem value={20}>Türk</MenuItem>
                 <MenuItem value={30}>İngilis</MenuItem>
-                <MenuItem value={30}>Rus</MenuItem>
+                <MenuItem value={30}>Rus</MenuItem> */}
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ minWidth: 120 }}>
+          {/* <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="gender-select-label">Səviyyə</InputLabel>
               <Select
@@ -81,12 +142,13 @@ export default function TestPage() {
                 <MenuItem value={"other"}>Çətin</MenuItem>
               </Select>
             </FormControl>
-          </Box>
+          </Box> */}
          <div className={styles.buttonEdit}>
-        <Link href="/testexam">
-        <button className={styles.buttonHover}>Davam et</button>
-        </Link>
+        {/* <Link href="/testexam"> */}
+        <button onClick={handleStartClick} className={styles.buttonHover}>Davam et</button>
+        {/* </Link> */}
          </div>
+         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         </div>
       </div>
     </div>

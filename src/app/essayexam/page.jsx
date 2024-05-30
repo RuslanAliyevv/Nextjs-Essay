@@ -1,19 +1,23 @@
-"use client"
+"use client";
 import React from "react";
 import styles from "./styles.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import  { useState,useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { EditorState, convertToRaw } from "draft-js";
 import Loading from "../essayexam/loading";
+import axios from "axios";
+import { useLanguage } from "../components/Context/context";
+import { getCookie, deleteCookie } from "cookies-next";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   { ssr: false }
 );
-export default function EssayExam() {
+export default function EssayExam({}) {
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [timer, setTimer] = useState(30);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -21,7 +25,32 @@ export default function EssayExam() {
   const buttonRef = useRef(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [audioSrc, setAudioSrc] = useState("");
+  const [audioData, setAudioData] = useState("");
+
+  useEffect(() => {
+    const fetchAudio = async () => {
+      try {
+        const response = await axios.get("/api/attachment/audio", {
+          headers: {
+            // Authorization: `Bearer ${accessToken}`,
+            "accept-language": selectedLanguage,
+          },
+        });
+        const audioPath = response.data.data.attachmentPath.replace(/\\/g, "/");
+        console.log(audioPath);
+        const audioUrl = `/api/${audioPath}`;
+        setAudioSrc(audioUrl);
+        setAudioData(response.data.attachmentId);
+        console.log(response.data);
+        console.log(audioUrl);
+      } catch (error) {
+        console.error("Error fetching audio:", error);
+      }
+    };
+
+    fetchAudio();
+  }, []);
 
   useEffect(() => {
     const handleAudioEnd = () => {
@@ -60,26 +89,63 @@ export default function EssayExam() {
     };
   }, [isTimerRunning]);
 
-  
-       
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const contentState = editorState.getCurrentContent();
+      const plainText = contentState.getPlainText();
 
-  const handleSubmit = () => {
-    setIsLoading(true); 
-    setTimeout(() => {
-      setIsLoading(false); 
-      router.push('/essayresult');
-    }, 2000);
+      try {
+        const user = JSON.parse(getCookie("userInfo"));
+        console.log("user", user);
+        const response = await axios.post("/api/transcription", {
+          userId: user.userId,
+          attachmentId: 29,
+          timeSpendForUserCheck: 30,
+          userTranscription: plainText,
+        });
+        console.log(response.data);
+        console.log("Transcription sent to backend:", plainText);
+      } catch (error) {
+        console.error("Error sending transcription to backend:", error);
+        setIsLoading(false);
+        return;
+      }
+
+      router.push("/essayresult");
+    } catch (error) {
+      console.error("Error handling submission:", error);
+      setIsLoading(false);
+    }
   };
+
+  // const onEditorStateChange = (editorState) => {
+  //   setEditorState(editorState);
+  //   const contentState = editorState.getCurrentContent();
+  //   const plainText = contentState.getPlainText();
+  //   sendToBackend(plainText);
+  // };
+
+  // const sendToBackend = async (text) => {
+  //   try {
+  //     const user = JSON.parse(getCookie("userInfo"));
+  //     console.log("user", user);
+  //     // await axios.post("/api/transcription", { userTranscription: text });
+  //     console.log("Transcription sent to backend:", text);
+  //   } catch (error) {
+  //     console.error("Error sending transcription to backend:", error);
+  //   }
+  // };
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
     const contentState = editorState.getCurrentContent();
-    const plainText = contentState.getPlainText(); 
+    const plainText = contentState.getPlainText();
     // console.log(plainText);
   };
   return (
     <>
-       {isLoading && <Loading />} 
+      {isLoading && <Loading />}
       <div className={styles.EssayExam}>
         <div className="container">
           <div className="text-end">
@@ -98,8 +164,13 @@ export default function EssayExam() {
             </div>
           </div>
           <h5>İmlaya başlamaq üçün aşağıdakı səs faylını başladın.</h5>
-          <audio style={{ marginTop: "10px" }} controls ref={audioRef}>
-            <source src="/assets/image/the-wind-goodbye-2023-183300.mp3" type="audio/mpeg" />
+          <audio
+            src={audioSrc}
+            style={{ marginTop: "10px" }}
+            controls
+            ref={audioRef}
+          >
+            <source type="audio/mpeg" />
             Tarayıcı audio elementini desteklemir.
           </audio>
           <div className={`row align-items-center ${styles.textarearow}`}>
@@ -114,6 +185,11 @@ export default function EssayExam() {
                       editorClassName="editorClassName"
                       onEditorStateChange={onEditorStateChange}
                       placeholder="Metni yazin"
+                      handlePastedText={() => false} // Pasting text is disabled
+                      customStyleMap={{
+                        drop: () => handleDropping,
+                      }}
+                      handleDroppedFiles={() => false} // Dropping files is disabled
                     />
                   </div>
                 </form>
@@ -125,14 +201,20 @@ export default function EssayExam() {
                   <div className={styles.taimerItems}>
                     <h2 className="text-center">Taymer</h2>
                     <div className={styles.hr}></div>
-                    <span className={isTimerRunning ? styles.redText : ""}>{timer}</span>
+                    <span className={isTimerRunning ? styles.redText : ""}>
+                      {timer}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="text-center">
-            <button ref={buttonRef} onClick={handleSubmit} className={styles.endButton}>
+            <button
+              ref={buttonRef}
+              onClick={handleSubmit}
+              className={styles.endButton}
+            >
               Təsdiqlə
             </button>
           </div>

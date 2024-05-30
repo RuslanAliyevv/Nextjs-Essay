@@ -33,3 +33,26 @@
     font-size: 18px;
     line-height: 26px;
 }
+.Statistic .left{
+    position: relative;
+    padding-left: 50px;
+    width: 100%;
+}
+.Statistic .hr1{
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    height: 0.5px;
+    background-color:rgba(217, 218, 218, 1);
+}
+.Statistic .hr2{
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%,-50%);
+    width: 0.5px;
+    height: 370px;
+    background-color:rgba(217, 218, 218, 1);
+}

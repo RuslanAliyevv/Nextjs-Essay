@@ -56,7 +56,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   width: 473px;
-  height: 260px;
+  height: 280px;
   display: inline-block !important;
 }
 
@@ -76,6 +76,10 @@
   font-size: 16px !important;
   line-height: 21.94px !important;
   margin-left: 5px;
+}
+.UserComment .starDiv{
+  margin-top: -14px;
+  margin-left: 6px;
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1400px) {

@@ -61,15 +61,15 @@
   content: "";
   background: linear-gradient(
     45deg,
-    #32CD32,
-    #00FF00,
-    #228B22,
-    #008000,
-    #ADFF2F,
-    #228B22,
+    #FFA500,
+    #FFA500,
+    #FFA500,
+    #FFD700,
+    #FFA500,
+    #FF8C00,
     #FFFF00,
-    #00FF00,
-    #9ACD32
+    #FFA500,
+    #FFD700
   );
   position: absolute;
   top: -2px;

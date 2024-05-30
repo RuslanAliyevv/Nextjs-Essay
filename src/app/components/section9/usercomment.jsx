@@ -46,9 +46,46 @@ export default function UserComment() {
                       src="/assets/image/usercommenthead.png"
                       alt="Tos"
                     />
-                    <div>
-                      <h4>Arif Əlizadə</h4>
+                            <div style={{marginLeft:"5px"}}>
+                    <h4>Arif Əlizadə</h4>
+                    <div className={styles.starDiv}>
+                    <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -68,9 +105,47 @@ export default function UserComment() {
                     src="/assets/image/usercommenthead.png"
                     alt="Tos"
                   />
-                  <div>
+                  <div style={{marginLeft:"5px"}}>
                     <h4>Həsən Kərimov</h4>
+                    <div className={styles.starDiv}>
+                    <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                  <Image
+                    loading="lazy"
+                    width={22}
+                    height={20}
+                    src="/assets/image/star.png"
+                    alt="Tos"
+                  />
+                    </div>
                   </div>
+                 
                 </div>
               </div>
             </div>

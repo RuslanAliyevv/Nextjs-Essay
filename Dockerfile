@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY imlay-frontend .
+COPY frontend .
 
 RUN npm run build
 

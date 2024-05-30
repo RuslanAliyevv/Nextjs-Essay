@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.HETZNER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "."
-          target: "/home/imlay-frontend"
+          target: "/home/frontend"
       - name: SSH into Hetzner and restart app
         uses: appleboy/ssh-action@master
         with:
@@ -39,6 +39,6 @@ jobs:
           username: ${{ secrets.HETZNER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/imlay-frontend
+            cd /home/frontend
             docker build -t nextjs-app .
             docker run -p 3000:3000 nextjs-app

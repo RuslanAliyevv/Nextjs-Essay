@@ -15,10 +15,9 @@ import axios from "axios";
 import { useLanguage } from "../components/Context/context";
 
 export default function EssayPage() {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
-  const [languages, setLanguages] = useState([]);
-  // const [levels, setLevels] = useState([]);
-  // const [selectedLanguage, setSelectedLanguage] = useState("");
+  const { selectedLanguage, setSelectedLanguage, languages, setLanguages } =
+    useLanguage();
+  // const [languages, setLanguages] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
@@ -41,10 +40,6 @@ export default function EssayPage() {
     setSelectedLanguage(event.target.value);
   };
 
-  const handleLevelChange = (event) => {
-    setSelectedLevel(event.target.value);
-  };
-
   const handleStartClick = async () => {
     const accessToken = getCookie("accessToken");
     if (!selectedLanguage) {
@@ -53,7 +48,6 @@ export default function EssayPage() {
     }
     if (accessToken) {
       try {
-        // console.log(`Dil secimi ${selectedLanguage}`)
         const response = await axios.get("/api/attachment/audio", {
           headers: {
             // Authorization: `Bearer ${accessToken}`,
@@ -120,7 +114,17 @@ export default function EssayPage() {
                       value={language.language_code}
                     >
                       {language.language_name}
+                      <Image
+                      style={{marginLeft:"5px"}}
+                        loading="lazy"
+                        width={22}
+                        height={22}
+                        src="/assets/image/headerflag1.png"
+                        alt="Tos"
+                      />
                     </MenuItem>
+                    
+                      
                   ))}
                 </Select>
               </FormControl>

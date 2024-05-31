@@ -190,6 +190,11 @@
   padding: 10px;
   padding-bottom: 200px !important;
   width: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: 400px;
+
 }
 
 .toolbarClassName {

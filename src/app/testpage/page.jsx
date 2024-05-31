@@ -12,7 +12,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Link from "next/link";
+import { useLanguage } from "../components/Context/context";
+
 export default function TestPage() {
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
+  
   // const [age, setAge] = React.useState("");
   // const [gender, setGender] = React.useState("");
   // const handleChange = (event) => {
@@ -23,8 +27,7 @@ export default function TestPage() {
   // };
   const [languages, setLanguages] = useState([]);
   // const [levels, setLevels] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState([]);
+  // const [selectedLevel, setSelectedLevel] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
@@ -116,7 +119,7 @@ export default function TestPage() {
               >
                 
                   {languages.map((language) => (
-                    <MenuItem key={language.id} value={language.language_name}>
+                    <MenuItem key={language.language_code} value={language.language_code}>
                       {language.language_name}
                     </MenuItem>
                   ))}

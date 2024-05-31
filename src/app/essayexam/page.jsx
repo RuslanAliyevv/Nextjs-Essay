@@ -17,7 +17,7 @@ const Editor = dynamic(
   { ssr: false }
 );
 export default function EssayExam({}) {
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
+  const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [timer, setTimer] = useState(30);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -34,14 +34,16 @@ export default function EssayExam({}) {
         const response = await axios.get("/api/attachment/audio", {
           headers: {
             // Authorization: `Bearer ${accessToken}`,
-            "accept-language": selectedLanguage,
+            "accept-language":
+              selectedLanguage || getCookie("selectedLanguage"),
           },
         });
         const audioPath = response.data.data.attachmentPath.replace(/\\/g, "/");
         console.log(audioPath);
         const audioUrl = `/api/${audioPath}`;
         setAudioSrc(audioUrl);
-        setAudioData(response.data.attachmentId);
+        setAudioData(response.data.data.attachmentId);
+        console.log("SALAMLAR", response.data.data.attachmentId);
         console.log(response.data);
         console.log(audioUrl);
       } catch (error) {
@@ -50,7 +52,7 @@ export default function EssayExam({}) {
     };
 
     fetchAudio();
-  }, []);
+  }, [selectedLanguage]);
 
   useEffect(() => {
     const handleAudioEnd = () => {
@@ -91,29 +93,37 @@ export default function EssayExam({}) {
 
   const handleSubmit = async () => {
     setIsLoading(true);
+
     try {
       const contentState = editorState.getCurrentContent();
       const plainText = contentState.getPlainText();
 
-      try {
-        const user = JSON.parse(getCookie("userInfo"));
-        console.log("user", user);
-        const response = await axios.post("/api/transcription", {
-          userId: user.userId,
-          attachmentId: 29,
-          timeSpendForUserCheck: 30,
-          userTranscription: plainText,
-        });
-        console.log(response.data);
-        console.log("Transcription sent to backend:", plainText);
-      } catch (error) {
-        console.error("Error sending transcription to backend:", error);
-        setIsLoading(false);
-        return;
-      }
+      const user = JSON.parse(getCookie("userInfo"));
+      console.log("user", user);
+      const response = await axios.post("/api/transcription", {
+        userId: user.userId,
+        attachmentId: audioData,
+        timeSpendForUserCheck: 30,
+        userTranscription: plainText,
+      });
+      console.log("Transcription sent to backend:", plainText);
+      console.log(response.data);
 
-      router.push("/essayresult");
+      
+
+      // Başarılı gönderim sonrası işlemler
+      const { score, wordMistakes, spaceMistakes, specialCharMistakes } = response.data;
+      router.push(
+        `/essayresult?userTranscription=${encodeURIComponent(plainText)}&score=${score}&wordMistakes=${encodeURIComponent(
+          JSON.stringify(wordMistakes)
+        )}&spaceMistakes=${encodeURIComponent(
+          JSON.stringify(spaceMistakes)
+        )}&specialCharMistakes=${encodeURIComponent(
+          JSON.stringify(specialCharMistakes)
+        )}`
+      );
     } catch (error) {
+      // Hata durumunda işlemler
       console.error("Error handling submission:", error);
       setIsLoading(false);
     }
@@ -141,30 +151,52 @@ export default function EssayExam({}) {
     setEditorState(editorState);
     const contentState = editorState.getCurrentContent();
     const plainText = contentState.getPlainText();
-    // console.log(plainText);
   };
+
+  const handlePastedText = () => {
+    return true; // Prevent default paste behavior
+  };
+
+  const preventDefaultPaste = (e) => {
+    e.preventDefault(); // Prevent paste event
+  };
+
+  useEffect(() => {
+    const editorNode = document.querySelector(".DraftEditor-root");
+    if (editorNode) {
+      editorNode.addEventListener("paste", preventDefaultPaste);
+    }
+    return () => {
+      if (editorNode) {
+        editorNode.removeEventListener("paste", preventDefaultPaste);
+      }
+    };
+  }, []);
   return (
     <>
       {isLoading && <Loading />}
       <div className={styles.EssayExam}>
         <div className="container">
-          <div className="text-end">
+          {/* <div className="text-end">
             <Link href="/">
               <button>Ana Səhifə</button>
             </Link>
-          </div>
+          </div> */}
           <div className={styles.rowAll}>
             <div className={styles.left}>
               <span>Dil:</span>
-              <span> Azərbaycan dili</span>
-            </div>
-            <div className={styles.right}>
-              <span>Səviyyə:</span>
-              <span> Orta</span>
+              <span style={{ color: "red" }}>
+                {
+                  languages.find(
+                    (lang) => lang.language_code === selectedLanguage
+                  )?.language_name
+                }
+              </span>
             </div>
           </div>
           <h5>İmlaya başlamaq üçün aşağıdakı səs faylını başladın.</h5>
           <audio
+            controlsList="nodownload noplaybackrate"
             src={audioSrc}
             style={{ marginTop: "10px" }}
             controls
@@ -185,11 +217,7 @@ export default function EssayExam({}) {
                       editorClassName="editorClassName"
                       onEditorStateChange={onEditorStateChange}
                       placeholder="Metni yazin"
-                      handlePastedText={() => false} // Pasting text is disabled
-                      customStyleMap={{
-                        drop: () => handleDropping,
-                      }}
-                      handleDroppedFiles={() => false} // Dropping files is disabled
+                      // handlePastedText={handlePastedText}
                     />
                   </div>
                 </form>

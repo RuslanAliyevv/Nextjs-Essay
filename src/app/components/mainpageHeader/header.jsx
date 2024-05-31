@@ -7,6 +7,7 @@ import { useState,useEffect } from "react";
 import { getCookie,deleteCookie } from 'cookies-next';
 import { useRouter } from "next/navigation";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+
 export default function MainPageHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
@@ -92,6 +93,22 @@ export default function MainPageHeader() {
                   <button className={styles.buttonHover}>Daxil ol</button>
                 </Link>
               )}
+              <div  style={{display:"inline-block",marginLeft:"10px"}}>
+             <div className={styles.flag}>
+            <div>
+            <Image
+                  loading="lazy"
+                  width={22}
+                  height={22}
+                  src="/assets/image/headerflag1.png"
+                  alt="Tos"
+                />
+            </div>
+               <div>
+               <h5 style={{marginLeft:"5px"}}>AZ</h5>
+               </div>
+             </div>
+              </div>
             </div>
           </div>
         </div>

@@ -58,6 +58,9 @@
   outline: none;
 } */
 
+.TextExam audio{
+  width: 100%;
+}
 .textDiv {
   border: 1px solid  rgba(222, 225, 241, 1);
   border-radius: 20px;

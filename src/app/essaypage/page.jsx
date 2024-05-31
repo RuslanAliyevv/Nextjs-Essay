@@ -89,7 +89,20 @@ export default function EssayPage() {
             </div>
             <div className="col-lg-6">
               <div className={styles.right}>
-                <h5>Az</h5>
+              <div className={styles.flag}>
+            <div>
+            <Image
+                  loading="lazy"
+                  width={22}
+                  height={22}
+                  src="/assets/image/headerflag1.png"
+                  alt="Tos"
+                />
+            </div>
+               <div>
+               <h5 style={{marginLeft:"5px"}}>AZ</h5>
+               </div>
+             </div>
               </div>
             </div>
           </div>
@@ -114,14 +127,14 @@ export default function EssayPage() {
                       value={language.language_code}
                     >
                       {language.language_name}
-                      <Image
+                      {/* <Image
                       style={{marginLeft:"5px"}}
                         loading="lazy"
                         width={22}
                         height={22}
                         src="/assets/image/headerflag1.png"
                         alt="Tos"
-                      />
+                      /> */}
                     </MenuItem>
                     
                       

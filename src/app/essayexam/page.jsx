@@ -17,7 +17,7 @@ const Editor = dynamic(
   { ssr: false }
 );
 export default function EssayExam({}) {
-  const { selectedLanguage, setSelectedLanguage, languages } = useLanguage();
+  const { selectedLanguage, languages } = useLanguage();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [timer, setTimer] = useState(30);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -43,7 +43,6 @@ export default function EssayExam({}) {
         const audioUrl = `/api/${audioPath}`;
         setAudioSrc(audioUrl);
         setAudioData(response.data.data.attachmentId);
-        console.log("SALAMLAR", response.data.data.attachmentId);
         console.log(response.data);
         console.log(audioUrl);
       } catch (error) {

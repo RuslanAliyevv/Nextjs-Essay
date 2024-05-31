@@ -5,43 +5,59 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useEffect,useState } from 'react';
 import { useSearchParams,useRouter } from "next/navigation";
-const highlightMistakes = (text, mistakes) => {
+const highlightMistakes = (text, wordMistakes, spaceMistakes,specialCharMistakes) => {
   const elements = [];
-  let lastIndex = 0;
+  const isMistake = new Array(text.length).fill(false);
+  const underscorePositions = new Set();
+  const specialCharMistakePositions = new Set();
+  // Word mistakes
+  wordMistakes.forEach((mistake) => {
+    const { userWordPositionStart, userWordPositionEnd } = mistake;
+    for (let i = userWordPositionStart ; i < userWordPositionEnd; i++) {
+      isMistake[i] = true;
+    }
+  });
 
-  mistakes.forEach((mistake, index) => {
-    if (lastIndex < mistake.userWordPositionStart) {
+  // Space mistakes
+  spaceMistakes.forEach((mistake) => {
+    const { startPosition, endPosition } = mistake;
+    for (let i = startPosition; i < endPosition; i++) { // endPosition dahil değil
+      isMistake[i] = true;
+    }
+    if (endPosition < text.length) {
+      underscorePositions.add(endPosition);
+    }
+  });
+  
+  
+
+  // Highlight text with underscores
+  for (let i = 0; i < text.length; i++) {
+    if (underscorePositions.has(i)) {
       elements.push(
-        <span key={`text-${index}`}>{text.slice(lastIndex, mistake.userWordPositionStart)}</span>
+        <span key={`underscore-${i}`} style={{ color: "red" ,backgroundColor: "red"}}>
+          __
+        </span>
       );
     }
 
-    const incorrectWord = text.slice(mistake.userWordPositionStart, mistake.userWordPositionEnd);
-
-    if (mistake.userWord === incorrectWord) {
+    if (isMistake[i]) {
       elements.push(
-        <span key={`mistake-${index}`}>
-          <span style={{ color: "red" }}>{incorrectWord}</span>
+        <span key={`mistake-${i}`} style={{ color: "red" }}>
+          {text[i]}
         </span>
       );
     } else {
       elements.push(
-        <span key={`mistake-${index}`}>
-          {incorrectWord}
+        <span key={`text-${i}`}>
+          {text[i]}
         </span>
       );
     }
-    
-    lastIndex = mistake.userWordPositionEnd;
-  });
-
-  if (lastIndex < text.length) {
-    elements.push(<span key={`text-end`}>{text.slice(lastIndex)}</span>);
   }
 
   return elements;
 };
-
 export default function Result() {
   const router = useRouter();
   const [userTranscription, setUserTranscription] = useState("");
@@ -75,10 +91,10 @@ export default function Result() {
                <h3 className='text-center'>İmla</h3>
                </div>
                    <div  style={{paddingLeft:"30px",paddingRight:"30px",paddingTop:"30px",}}>
-                   <p>{highlightMistakes(userTranscription, mistakes)}</p>
+                   <p>{highlightMistakes(userTranscription, wordMistakes, spaceMistakes)}</p>
                    </div>
                     <div className={styles.hr}></div>
-                    <div  style={{paddingLeft:"30px",paddingRight:"30px",marginTop:"20px"}}>
+                    {/* <div  style={{paddingLeft:"30px",paddingRight:"30px",marginTop:"20px"}}>
                     <h5>Orfoqrafik səhvlər:</h5>
                     </div>
                     <div  style={{paddingLeft:"30px",paddingRight:"30px"}}>
@@ -92,13 +108,13 @@ export default function Result() {
                     <div  style={{paddingLeft:"30px",paddingRight:"30px"}}>
                     <span style={{color:"rgba(189, 27, 50, 1)"}}>Latraset - </span>
                     <span style={{color:"rgba(62, 158, 59, 1)"}}>Letraset</span>
-                    </div>
+                    </div> */}
 
                     <div  style={{paddingLeft:"30px",paddingRight:"30px"}} className='mt-5'>
                     <span style={{color:"rgba(189, 27, 50, 1)"}}>Nəticəniz:</span>
                     <span style={{color:"rgba(62, 158, 59, 1)"}}>{score}</span>
                     </div>
-                    <div className='text-center'>
+                    <div className={`text-center ${styles.buttonDiv}`}>
                       <Link href="/">
                       <button className={styles.buttonHover}>Ana səhifəyə keçid</button>
                       </Link>

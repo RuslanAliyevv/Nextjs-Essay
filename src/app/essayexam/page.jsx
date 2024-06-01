@@ -39,12 +39,12 @@ export default function EssayExam({}) {
           },
         });
         const audioPath = response.data.data.attachmentPath.replace(/\\/g, "/");
-        console.log(audioPath);
+        // console.log(audioPath);
         const audioUrl = `/api/${audioPath}`;
         setAudioSrc(audioUrl);
         setAudioData(response.data.data.attachmentId);
-        console.log(response.data);
-        console.log(audioUrl);
+        // console.log(response.data);
+        // console.log(audioUrl);
       } catch (error) {
         console.error("Error fetching audio:", error);
       }
@@ -105,13 +105,13 @@ export default function EssayExam({}) {
         timeSpendForUserCheck: 30,
         userTranscription: plainText,
       });
-      console.log("Transcription sent to backend:", plainText);
-      console.log(response.data);
+      // console.log("Transcription sent to backend:", plainText);
+      // console.log(response.data);
 
       
 
-      // Başarılı gönderim sonrası işlemler
       const { score, wordMistakes, spaceMistakes, specialCharMistakes } = response.data;
+      
       router.push(
         `/essayresult?userTranscription=${encodeURIComponent(plainText)}&score=${score}&wordMistakes=${encodeURIComponent(
           JSON.stringify(wordMistakes)
@@ -122,7 +122,6 @@ export default function EssayExam({}) {
         )}`
       );
     } catch (error) {
-      // Hata durumunda işlemler
       console.error("Error handling submission:", error);
       setIsLoading(false);
     }
@@ -184,7 +183,7 @@ export default function EssayExam({}) {
           <div className={styles.rowAll}>
             <div className={styles.left}>
               <span>Dil:</span>
-              <span style={{ color: "red" }}>
+              <span>
                 {
                   languages.find(
                     (lang) => lang.language_code === selectedLanguage

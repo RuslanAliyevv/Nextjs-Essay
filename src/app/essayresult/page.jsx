@@ -1,11 +1,16 @@
-"use client"
-import React from 'react'
+"use client";
+import React from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
-import Link from 'next/link';
-import { useEffect,useState } from 'react';
-import { useSearchParams,useRouter } from "next/navigation";
-const highlightMistakes = (text, wordMistakes, spaceMistakes, specialCharMistakes) => {
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+const highlightMistakes = (
+  text,
+  wordMistakes,
+  spaceMistakes,
+  specialCharMistakes
+) => {
   const elements = [];
   const isMistake = new Array(text.length).fill(false);
   const specialCharPositions = new Set();
@@ -22,7 +27,7 @@ const highlightMistakes = (text, wordMistakes, spaceMistakes, specialCharMistake
   // Space mistakes
   spaceMistakes.forEach((mistake) => {
     const { startPosition, endPosition } = mistake;
-    for (let i = startPosition; i < endPosition; i++) { // endPosition dahil değil
+    for (let i = startPosition; i < endPosition; i++) {
       isMistake[i] = true;
     }
     if (endPosition < text.length) {
@@ -40,7 +45,10 @@ const highlightMistakes = (text, wordMistakes, spaceMistakes, specialCharMistake
   for (let i = 0; i < text.length; i++) {
     if (underscorePositions.has(i)) {
       elements.push(
-        <span key={`underscore-${i}`} style={{ color: "purple", backgroundColor: "purple" }}>
+        <span
+          key={`underscore-${i}`}
+          style={{ color: "purple", backgroundColor: "purple" }}
+        >
           __
         </span>
       );
@@ -54,16 +62,12 @@ const highlightMistakes = (text, wordMistakes, spaceMistakes, specialCharMistake
       );
     } else if (isMistake[i]) {
       elements.push(
-        <span key={`mistake-${i}`} style={{ color: "red",fontWeight:"bold" }}>
+        <span key={`mistake-${i}`} style={{ color: "red", fontWeight: "bold" }}>
           {text[i]}
         </span>
       );
     } else {
-      elements.push(
-        <span key={`text-${i}`}>
-          {text[i]}
-        </span>
-      );
+      elements.push(<span key={`text-${i}`}>{text[i]}</span>);
     }
   }
 
@@ -81,9 +85,15 @@ export default function Result() {
     const params = new URLSearchParams(window.location.search);
     const transcription = params.get("userTranscription");
     const score = params.get("score");
-    const wordMistakes = JSON.parse(decodeURIComponent(params.get("wordMistakes")));
-    const spaceMistakes = JSON.parse(decodeURIComponent(params.get("spaceMistakes")));
-    const specialCharMistakes = JSON.parse(decodeURIComponent(params.get("specialCharMistakes")));
+    const wordMistakes = JSON.parse(
+      decodeURIComponent(params.get("wordMistakes"))
+    );
+    const spaceMistakes = JSON.parse(
+      decodeURIComponent(params.get("spaceMistakes"))
+    );
+    const specialCharMistakes = JSON.parse(
+      decodeURIComponent(params.get("specialCharMistakes"))
+    );
 
     setUserTranscription(decodeURIComponent(transcription || ""));
     setScore(parseFloat(score));
@@ -95,17 +105,47 @@ export default function Result() {
   // const mistakes = [...wordMistakes, ...spaceMistakes, ...specialCharMistakes];
   return (
     <>
-        <div className={styles.Result}>
-            <div className={styles.resultBorder}>
-                <div className={styles.resultItems}>
-               <div style={{paddingLeft:"30px",paddingRight:"30px",paddingTop:"30px"}}>
-               <h3 className='text-center'>İmla</h3>
-               </div>
-                   <div  style={{paddingLeft:"30px",paddingRight:"30px",paddingTop:"30px",}}>
-                   <p>{highlightMistakes(userTranscription, wordMistakes, spaceMistakes, specialCharMistakes)}</p>
-                   </div>
-                    <div className={styles.hr}></div>
-                    {/* <div  style={{paddingLeft:"30px",paddingRight:"30px",marginTop:"20px"}}>
+      <div className={styles.Result}>
+        <div className={styles.resultBorder}>
+          <div className={styles.resultItems}>
+            <div
+              style={{
+                paddingLeft: "30px",
+                paddingRight: "30px",
+                paddingTop: "30px",
+              }}
+            >
+              <h3 className="text-center">İmla</h3>
+            </div>
+            <div
+              style={{
+                paddingLeft: "30px",
+                paddingRight: "30px",
+                paddingTop: "30px",
+              }}
+            >
+              <p>
+                {highlightMistakes(
+                  userTranscription,
+                  wordMistakes,
+                  spaceMistakes,
+                  specialCharMistakes
+                )}
+              </p>
+            </div>
+            <div className={styles.hr}></div>
+            <div
+              style={{ paddingLeft: "30px", paddingRight: "30px" }}
+              className="mt-3"
+            >
+              <span>Düzgün yazılış forması: </span>
+              {wordMistakes.map((mistake, index) => (
+                <span style={{color:"rgb(62, 158, 59)"}} key={index}>{mistake.correctWord},</span>
+              ))}
+            </div>
+              
+
+            {/* <div  style={{paddingLeft:"30px",paddingRight:"30px",marginTop:"20px"}}>
                     <h5>Orfoqrafik səhvlər:</h5>
                     </div>
                     <div  style={{paddingLeft:"30px",paddingRight:"30px"}}>
@@ -121,19 +161,23 @@ export default function Result() {
                     <span style={{color:"rgba(62, 158, 59, 1)"}}>Letraset</span>
                     </div> */}
 
-                    <div  style={{paddingLeft:"30px",paddingRight:"30px"}} className='mt-5'>
-                    <span style={{color:"rgba(189, 27, 50, 1)"}}>Nəticəniz:</span>
-                    <span style={{color:"rgba(62, 158, 59, 1)"}}> {score}</span>
-                    </div>
-                    <div className={`text-center ${styles.buttonDiv}`}>
-                      <Link href="/">
-                      <button className={styles.buttonHover}>Ana səhifəyə keçid</button>
-                      </Link>
-                    </div>
-                    
-                </div>
+            <div
+              style={{ paddingLeft: "30px", paddingRight: "30px" }}
+              className="mt-2"
+            >
+              <span style={{ color: "rgba(189, 27, 50, 1)" }}>Nəticəniz:</span>
+              <span style={{ color: "rgba(62, 158, 59, 1)" }}> {score}</span>
             </div>
+            <div className={`text-center ${styles.buttonDiv}`}>
+              <Link href="/">
+                <button className={styles.buttonHover}>
+                  Ana səhifəyə keçid
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
+      </div>
     </>
-  )
+  );
 }

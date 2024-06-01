@@ -5,6 +5,7 @@ import Image from "next/image";
 import  { useState, useEffect } from 'react';
 import { login } from '../services/api/user';
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState('');
@@ -29,13 +30,15 @@ export default function Login() {
     <div className={styles.Login}>
       <div className={styles.loginBorder}>
         <div className="text-center">
-          <Image
+         <Link href="/">
+         <Image
             loading="lazy"
             width={167}
             height={70}
             src="/assets/image/newspellorify.svg"
             alt="Tos"
           />
+         </Link>
         </div>
         <div className="text-center">
           <h2>Giriş</h2>

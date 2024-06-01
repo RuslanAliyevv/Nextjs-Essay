@@ -55,7 +55,7 @@ export default function EssayExam({}) {
 
   useEffect(() => {
     const handleAudioEnd = () => {
-      let countdown = 5;
+      let countdown = 30;
       setTimer(countdown);
       setIsTimerRunning(true);
       const interval = setInterval(() => {
@@ -216,7 +216,7 @@ export default function EssayExam({}) {
                       editorClassName="editorClassName"
                       onEditorStateChange={onEditorStateChange}
                       placeholder="Metni yazin"
-                      // handlePastedText={handlePastedText}
+                      handlePastedText={handlePastedText}
                     />
                   </div>
                 </form>

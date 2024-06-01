@@ -5,15 +5,16 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useEffect,useState } from 'react';
 import { useSearchParams,useRouter } from "next/navigation";
-const highlightMistakes = (text, wordMistakes, spaceMistakes,specialCharMistakes) => {
+const highlightMistakes = (text, wordMistakes, spaceMistakes, specialCharMistakes) => {
   const elements = [];
   const isMistake = new Array(text.length).fill(false);
+  const specialCharPositions = new Set();
   const underscorePositions = new Set();
-  const specialCharMistakePositions = new Set();
+
   // Word mistakes
   wordMistakes.forEach((mistake) => {
     const { userWordPositionStart, userWordPositionEnd } = mistake;
-    for (let i = userWordPositionStart ; i < userWordPositionEnd; i++) {
+    for (let i = userWordPositionStart; i < userWordPositionEnd; i++) {
       isMistake[i] = true;
     }
   });
@@ -28,22 +29,32 @@ const highlightMistakes = (text, wordMistakes, spaceMistakes,specialCharMistakes
       underscorePositions.add(endPosition);
     }
   });
-  
-  
 
-  // Highlight text with underscores
+  // Special character mistakes
+  specialCharMistakes.forEach((mistake) => {
+    const { position } = mistake;
+    specialCharPositions.add(position);
+  });
+
+  // Highlight text with underscores and special characters
   for (let i = 0; i < text.length; i++) {
     if (underscorePositions.has(i)) {
       elements.push(
-        <span key={`underscore-${i}`} style={{ color: "red" ,backgroundColor: "red"}}>
+        <span key={`underscore-${i}`} style={{ color: "purple", backgroundColor: "purple" }}>
           __
         </span>
       );
     }
 
-    if (isMistake[i]) {
+    if (specialCharPositions.has(i)) {
       elements.push(
-        <span key={`mistake-${i}`} style={{ color: "red" }}>
+        <span key={`specialchar-${i}`} style={{ color: "yellow" }}>
+          {text[i]}
+        </span>
+      );
+    } else if (isMistake[i]) {
+      elements.push(
+        <span key={`mistake-${i}`} style={{ color: "red",fontWeight:"bold" }}>
           {text[i]}
         </span>
       );
@@ -78,10 +89,10 @@ export default function Result() {
     setScore(parseFloat(score));
     setWordMistakes(wordMistakes.mistakes || []);
     setSpaceMistakes(spaceMistakes.mistakes || []);
-    setSpecialCharMistakes(specialCharMistakes.mistakes || []);
+    setSpecialCharMistakes(specialCharMistakes.extraChars || []);
   }, []);
 
-  const mistakes = [...wordMistakes, ...spaceMistakes, ...specialCharMistakes];
+  // const mistakes = [...wordMistakes, ...spaceMistakes, ...specialCharMistakes];
   return (
     <>
         <div className={styles.Result}>
@@ -91,7 +102,7 @@ export default function Result() {
                <h3 className='text-center'>İmla</h3>
                </div>
                    <div  style={{paddingLeft:"30px",paddingRight:"30px",paddingTop:"30px",}}>
-                   <p>{highlightMistakes(userTranscription, wordMistakes, spaceMistakes)}</p>
+                   <p>{highlightMistakes(userTranscription, wordMistakes, spaceMistakes, specialCharMistakes)}</p>
                    </div>
                     <div className={styles.hr}></div>
                     {/* <div  style={{paddingLeft:"30px",paddingRight:"30px",marginTop:"20px"}}>
@@ -112,7 +123,7 @@ export default function Result() {
 
                     <div  style={{paddingLeft:"30px",paddingRight:"30px"}} className='mt-5'>
                     <span style={{color:"rgba(189, 27, 50, 1)"}}>Nəticəniz:</span>
-                    <span style={{color:"rgba(62, 158, 59, 1)"}}>{score}</span>
+                    <span style={{color:"rgba(62, 158, 59, 1)"}}> {score}</span>
                     </div>
                     <div className={`text-center ${styles.buttonDiv}`}>
                       <Link href="/">

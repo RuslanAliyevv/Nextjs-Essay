@@ -10,8 +10,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import Loading from "../essayexam/loading";
 import axios from "axios";
 import { useLanguage } from "../components/Context/context";
-import { getCookie, deleteCookie } from "cookies-next";
-
+import { getCookie,setCookie, deleteCookie } from "cookies-next";
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   { ssr: false }
@@ -28,6 +27,8 @@ export default function EssayExam({}) {
   const [audioSrc, setAudioSrc] = useState("");
   const [audioData, setAudioData] = useState("");
 
+//for Audio
+
   useEffect(() => {
     const fetchAudio = async () => {
       try {
@@ -43,8 +44,8 @@ export default function EssayExam({}) {
         const audioUrl = `/api/${audioPath}`;
         setAudioSrc(audioUrl);
         setAudioData(response.data.data.attachmentId);
-        // console.log(response.data);
-        // console.log(audioUrl);
+        console.log(response.data);
+        console.log(audioUrl);
       } catch (error) {
         console.error("Error fetching audio:", error);
       }
@@ -53,6 +54,7 @@ export default function EssayExam({}) {
     fetchAudio();
   }, [selectedLanguage]);
 
+  //for Audio design
   useEffect(() => {
     const handleAudioEnd = () => {
       let countdown = 30;
@@ -90,40 +92,28 @@ export default function EssayExam({}) {
     };
   }, [isTimerRunning]);
 
+  // text rules and request button
+  
+
   const handleSubmit = async () => {
     setIsLoading(true);
-
     try {
       const contentState = editorState.getCurrentContent();
       const plainText = contentState.getPlainText();
-
       const user = JSON.parse(getCookie("userInfo"));
-      console.log("user", user);
-      const response = await axios.post("/api/transcription", {
-        userId: user.userId,
+      const response = await axios.post("/api/transcription/compare-files", {
         attachmentId: audioData,
-        timeSpendForUserCheck: 30,
         userTranscription: plainText,
       });
-      // console.log("Transcription sent to backend:", plainText);
-      // console.log(response.data);
-
-      
-
-      const { score, wordMistakes, spaceMistakes, specialCharMistakes } = response.data;
-      
-      router.push(
-        `/essayresult?userTranscription=${encodeURIComponent(plainText)}&score=${score}&wordMistakes=${encodeURIComponent(
-          JSON.stringify(wordMistakes)
-        )}&spaceMistakes=${encodeURIComponent(
-          JSON.stringify(spaceMistakes)
-        )}&specialCharMistakes=${encodeURIComponent(
-          JSON.stringify(specialCharMistakes)
-        )}`
-      );
+  
+      const data = response.data;
+      console.log("datalari gormek",response.data)
+      setCookie("transcriptionErrors", JSON.stringify(data)); 
+      setCookie("userTranscription", plainText); 
+      router.push('/essayresult');
     } catch (error) {
       console.error("Error handling submission:", error);
-      setIsLoading(false);
+      setIsLoading(false); // 
     }
   };
 
@@ -215,7 +205,7 @@ export default function EssayExam({}) {
                       editorClassName="editorClassName"
                       onEditorStateChange={onEditorStateChange}
                       placeholder="Metni yazin"
-                      handlePastedText={handlePastedText}
+                      // handlePastedText={handlePastedText}
                     />
                   </div>
                 </form>

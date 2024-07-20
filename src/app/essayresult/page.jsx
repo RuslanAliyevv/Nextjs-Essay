@@ -5,179 +5,76 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-const highlightMistakes = (
-  text,
-  wordMistakes,
-  spaceMistakes,
-  specialCharMistakes
-) => {
-  const elements = [];
-  const isMistake = new Array(text.length).fill(false);
-  const specialCharPositions = new Set();
-  const underscorePositions = new Set();
+import { getCookie } from "cookies-next";
 
-  // Word mistakes
-  wordMistakes.forEach((mistake) => {
-    const { userWordPositionStart, userWordPositionEnd } = mistake;
-    for (let i = userWordPositionStart; i < userWordPositionEnd; i++) {
-      isMistake[i] = true;
-    }
-  });
-
-  // Space mistakes
-  spaceMistakes.forEach((mistake) => {
-    const { startPosition, endPosition } = mistake;
-    for (let i = startPosition; i < endPosition; i++) {
-      isMistake[i] = true;
-    }
-    if (endPosition < text.length) {
-      underscorePositions.add(endPosition);
-    }
-  });
-
-  // Special character mistakes
-  specialCharMistakes.forEach((mistake) => {
-    const { position } = mistake;
-    specialCharPositions.add(position);
-  });
-
-  // Highlight text with underscores and special characters
-  for (let i = 0; i < text.length; i++) {
-    if (underscorePositions.has(i)) {
-      elements.push(
-        <span
-          key={`underscore-${i}`}
-          style={{ color: "purple", backgroundColor: "purple" }}
-        >
-          __
-        </span>
-      );
-    }
-
-    if (specialCharPositions.has(i)) {
-      elements.push(
-        <span key={`specialchar-${i}`} style={{ color: "yellow" }}>
-          {text[i]}
-        </span>
-      );
-    } else if (isMistake[i]) {
-      elements.push(
-        <span key={`mistake-${i}`} style={{ color: "red", fontWeight: "bold" }}>
-          {text[i]}
-        </span>
-      );
-    } else {
-      elements.push(<span key={`text-${i}`}>{text[i]}</span>);
-    }
-  }
-
-  return elements;
-};
 export default function Result() {
   const router = useRouter();
-  const [userTranscription, setUserTranscription] = useState("");
-  const [score, setScore] = useState(0);
-  const [wordMistakes, setWordMistakes] = useState([]);
-  const [spaceMistakes, setSpaceMistakes] = useState([]);
-  const [specialCharMistakes, setSpecialCharMistakes] = useState([]);
+  const [highlightedText, setHighlightedText] = useState("");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const transcription = params.get("userTranscription");
-    const score = params.get("score");
-    const wordMistakes = JSON.parse(
-      decodeURIComponent(params.get("wordMistakes"))
-    );
-    const spaceMistakes = JSON.parse(
-      decodeURIComponent(params.get("spaceMistakes"))
-    );
-    const specialCharMistakes = JSON.parse(
-      decodeURIComponent(params.get("specialCharMistakes"))
-    );
-
-    setUserTranscription(decodeURIComponent(transcription || ""));
-    setScore(parseFloat(score));
-    setWordMistakes(wordMistakes.mistakes || []);
-    setSpaceMistakes(spaceMistakes.mistakes || []);
-    setSpecialCharMistakes(specialCharMistakes.extraChars || []);
+    const transcription = getCookie("userTranscription");
+    const errors = JSON.parse(getCookie("transcriptionErrors"));
+    
+    if (transcription && errors) {
+      const highlighted = highlightErrors(transcription, errors);
+      setHighlightedText(highlighted);
+    }
   }, []);
 
-  // const mistakes = [...wordMistakes, ...spaceMistakes, ...specialCharMistakes];
+  const highlightErrors = (text, errors) => {
+    let newText = text;
+    let offset = 0;
+
+    errors.forEach((error) => {
+      if (error.line2ContentIndexes && error.line2ContentIndexes.length > 0) {
+        error.line2ContentIndexes.forEach((index) => {
+          const start = index.startIndex + offset;
+          const end = index.endIndex + offset + 1;
+          const before = newText.slice(0, start);
+          const highlight = newText.slice(start, end);
+          const after = newText.slice(end);
+
+          newText = `${before}<mark>${highlight}</mark>${after}`;
+          offset += 13; // <mark></mark> eklenmesiyle oluşan offset
+        });
+      }
+    });
+
+    return newText;
+  };
+
   return (
-    <>
-      <div className={styles.Result}>
-        <div className={styles.resultBorder}>
-          <div className={styles.resultItems}>
-            <div
-              style={{
-                paddingLeft: "30px",
-                paddingRight: "30px",
-                paddingTop: "30px",
-              }}
-            >
-              <h3 className="text-center">İmla</h3>
-            </div>
-            <div
-              style={{
-                paddingLeft: "30px",
-                paddingRight: "30px",
-                paddingTop: "30px",
-              }}
-            >
-              <p>
-                {highlightMistakes(
-                  userTranscription,
-                  wordMistakes,
-                  spaceMistakes,
-                  specialCharMistakes
-                )}
-              </p>
-            </div>
-            <div className={styles.hr}></div>
-            <div
-              style={{ paddingLeft: "30px", paddingRight: "30px" }}
-              className="mt-3"
-            >
-              <span>Düzgün yazılış forması: </span>
-              {wordMistakes.map((mistake, index) => (
-                <span style={{color:"rgb(62, 158, 59)"}} key={index}>{mistake.correctWord},</span>
-              ))}
-            </div>
-              
-
-            {/* <div  style={{paddingLeft:"30px",paddingRight:"30px",marginTop:"20px"}}>
-                    <h5>Orfoqrafik səhvlər:</h5>
-                    </div>
-                    <div  style={{paddingLeft:"30px",paddingRight:"30px"}}>
-                    <span style={{color:"rgba(189, 27, 50, 1)"}}>Spicimen - </span>
-                    <span style={{color:"rgba(62, 158, 59, 1)"}}>Specimen</span>
-                    </div>
-                    <div  style={{paddingLeft:"30px",paddingRight:"30px"}}>
-                    <span style={{color:"rgba(189, 27, 50, 1)"}}>Elektronic  - </span>
-                    <span style={{color:"rgba(62, 158, 59, 1)"}}>Electronic</span>
-                    </div>
-                    <div  style={{paddingLeft:"30px",paddingRight:"30px"}}>
-                    <span style={{color:"rgba(189, 27, 50, 1)"}}>Latraset - </span>
-                    <span style={{color:"rgba(62, 158, 59, 1)"}}>Letraset</span>
-                    </div> */}
-
-            <div
-              style={{ paddingLeft: "30px", paddingRight: "30px" }}
-              className="mt-2"
-            >
-              <span style={{ color: "rgba(189, 27, 50, 1)" }}>Nəticəniz:</span>
-              <span style={{ color: "rgba(62, 158, 59, 1)" }}> {score}</span>
-            </div>
-            <div className={`text-center ${styles.buttonDiv}`}>
-              <Link href="/">
-                <button className={styles.buttonHover}>
-                  Ana səhifəyə keçid
-                </button>
-              </Link>
-            </div>
+    <div className={styles.Result}>
+      <div className={styles.resultBorder}>
+        <div className={styles.resultItems}>
+          <div
+            style={{
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              paddingTop: "30px",
+            }}
+          >
+            <h3 className="text-center">İmla</h3>
+          </div>
+          <div
+            style={{
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              paddingTop: "30px",
+            }}
+            dangerouslySetInnerHTML={{ __html: highlightedText }}
+          >
+          </div>
+          <div className={`text-center ${styles.buttonDiv}`}>
+            <Link href="/">
+              <button className={styles.buttonHover}>Ana səhifəyə keçid</button>
+            </Link>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
+
+
+

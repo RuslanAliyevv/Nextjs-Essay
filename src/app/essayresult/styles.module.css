@@ -134,3 +134,7 @@
   .buttonDiv{
     margin: 10px;
   }
+
+  .errors{
+    background-color: red;
+  }

@@ -8,7 +8,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
 
 export default function Result() {
-  const router = useRouter();
   const [highlightedText, setHighlightedText] = useState("");
 
   useEffect(() => {
@@ -25,19 +24,26 @@ export default function Result() {
     let newText = text;
     let offset = 0;
 
-    errors.forEach((error) => {
+    
+    const allErrors = errors.flatMap(error => {
       if (error.line2ContentIndexes && error.line2ContentIndexes.length > 0) {
-        error.line2ContentIndexes.forEach((index) => {
-          const start = index.startIndex + offset;
-          const end = index.endIndex + offset + 1;
-          const before = newText.slice(0, start);
-          const highlight = newText.slice(start, end);
-          const after = newText.slice(end);
-
-          newText = `${before}<mark>${highlight}</mark>${after}`;
-          offset += 13; // <mark></mark> eklenmesiyle oluşan offset
-        });
+        return error.line2ContentIndexes.map(index => ({
+          startIndex: index.startIndex,
+          endIndex: index.endIndex,
+        }));
       }
+      return [];
+    }).sort((a, b) => a.startIndex - b.startIndex);
+
+    allErrors.forEach(({ startIndex, endIndex }) => {
+      const start = startIndex + offset;
+      const end = endIndex + offset + 1; // endIndex'in kendisini de dahil edin
+      const before = newText.slice(0, start);
+      const highlight = newText.slice(start, end);
+      const after = newText.slice(end);
+
+      newText = `${before}<mark>${highlight}</mark>${after}`;
+      offset += 13; 
     });
 
     return newText;
@@ -75,6 +81,4 @@ export default function Result() {
     </div>
   );
 }
-
-
 

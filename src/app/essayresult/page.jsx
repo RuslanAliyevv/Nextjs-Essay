@@ -73,7 +73,7 @@ export default function Result() {
           >
             <h3 className="text-center">İmla</h3>
             {finalScore !== null && (
-              <p style={{color:"red",fontWeight:"bold"}}  className="text-center">Final Score: {finalScore}</p>
+              <p style={{color:"#AA0000",fontWeight:"bold"}}  className="text-center">Final Score: {finalScore}</p>
             )}
           </div>
           <div
@@ -93,7 +93,7 @@ export default function Result() {
           }}
           >
           <div>
-          <span style={{color:"blue"}}>Right Words:</span>
+          <span style={{color:"rgba(27, 70, 153, 1)"}}>Right Words:</span>
               {rightWords.map((word, index) => (
                 <span style={{color:"green"}} key={index}> {word},</span>
               ))}
